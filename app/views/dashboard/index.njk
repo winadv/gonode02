@@ -1,0 +1,30 @@
+{% extends 'layout/default.njk' %}
+
+{% block body %}
+<div class="wrapper">
+  {% include 'partials/nav.njk' %}
+    <section id="main">
+      <div class="container">
+        <header>
+          <h2>Meus projetos ({{ projects.length }})</h2>
+          <div class="addon">
+            <form action="/app/projects/create" method="POST">
+              <input type="text" name="title" placeholder="Novo projeto...">
+              <button type="submit" class="btn">
+                <img src="/img/plus.svg">
+              </button>
+            </form>
+          </div>
+        </header>
+
+        <section id="content">
+          <div class="project-list">
+           {% for project in projects %}
+            <a href="/app/projects/{{ project.id }}">{{ project.title }}</a>
+           {% endfor %}
+          </div>
+        </section>
+      </div>
+    </section>
+  </div>
+{% endblock %}

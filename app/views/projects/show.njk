@@ -1,0 +1,51 @@
+{% extends 'layout/default.njk' %}
+
+{% block body %}
+  <div class="wrapper">
+    {% include 'partials/nav.njk' %}
+    <section id="main">
+      <div class="container">
+        <header>
+          <h2>{{ proj.title }}</h2>
+          <div class="addon">
+            <a href="#" class="btn" data-modal-open="#new-section"><img src="/img/plus.svg"> Nova Seção</a>
+            <form action="/app/projects/{{ activeProject }}?_method=DELETE" style="display: inline-block;" method="POST">
+              <button class="btn btn-danger" type="submit">Excluir Projeto</button>
+            </form>
+            <a href="/app/dashboard" class="btn">Voltar</a>
+          </div>
+        </header>
+
+        <section id="content">
+          <nav>
+            <div class="sessions">
+            {% for section in sections %}
+              <a href="/app/projects/{{ activeProject }}/sections/{{ section.id }}"
+              class="{% if section.id == currentSection %} active {% endif %}">{{ section.title }}</a>
+            {% endfor %}
+            </div>
+
+            <div class="modal" id="new-section">
+                <form action="/app/projects/{{ activeProject }}/sections/create" method="POST" class="modal-content">
+                  <input type="text" name="title" placeholder="Título do seção..."/>
+                  <div class="content-container">
+                    <textarea name="content" class="mde" placeholder="Conteúdo da seção..."></textarea>
+                  </div>
+                  <button type="submit">SALVAR SEÇÃO</button>
+                  <a href="#" data-modal-close="#new-section">CANCELAR</a>
+                </form>
+            </div>
+
+          </nav>
+
+          <article>
+            <div class="project-header">
+              <h2>Clique em uma das seções ao lado.</h2>
+            </div>
+          </article>
+        </section>
+      </div>
+    </section>
+  </div>
+
+{% endblock %}
